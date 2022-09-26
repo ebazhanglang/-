@@ -5,7 +5,6 @@ const devserve = axios.create({
   timeout: 5000
 })
 devserve.interceptors.response.use(response => {
-  console.log(response)
   const { message, data, success } = response.data
   if (success) {
     return data
