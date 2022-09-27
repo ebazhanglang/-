@@ -1,5 +1,7 @@
 <template>
-  <div>permission</div>
+  <div>
+    premission
+  </div>
 </template>
 
 <script>

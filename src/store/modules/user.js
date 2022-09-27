@@ -1,49 +1,45 @@
-/* eslint-disable */
-import { loginAPI } from '@/api/login'
-import { getInfo, getUserDetaolByid } from '@/api/user'
-
+import { login } from '@/api/login'
+import { getUserInfo, getUserDetailById } from '@/api/user'
 export default {
   namespaced: true,
   state: {
     token: null,
     userInfo: {},
-    hrsaastime: 0
+    harssTime: 0
   },
   mutations: {
-    GET_TOKEN(state, payload) {
-      state.token = payload
+    SET_TOKEN(state, token) {
+      state.token = token
     },
-    GET_USER_INFO(state, userInfo) {
+    SET_USER_INFO(state, userInfo) {
       state.userInfo = userInfo
-    },
-    REMOVE_USER_INFO(state) {
-      state.userInfo = {}
     },
     REMOVE_TOKEN(state) {
       state.token = null
     },
-    SET_HRSAASTIME(state, hrsaastime) {
-      state.hrsaastime = hrsaastime
+    REMOVE_USER_INFO(state) {
+      state.userInfo = {}
+    },
+    SET_HARSS_TIME(state, harssTime) {
+      state.harssTime = harssTime
     }
   },
   actions: {
-    async getLogin({ commit }, loginData) {
-      const data = await loginAPI(loginData)
-      commit('GET_TOKEN', data)
-      // 登录时 获取当前时间, 用于记录登录时间
-      commit('SET_HRSAASTIME', new Date().getTime())
+    async loginAction({ commit }, loginData) {
+      const data = await login(loginData)
+      commit('SET_TOKEN', data)
+      commit('SET_HARSS_TIME', Date.now())
     },
-    async getUserInfo({ commit },) {
-      const res = await getInfo()
-      const res1 = await getUserDetaolByid(res.userId)
-      // console.log(res, res1);
-      const result = { ...res, ...res1 }
-      commit('GET_USER_INFO', result)
+    async getUserInfo({ commit }) {
+      const data = await getUserInfo()
+      const res1 = await getUserDetailById(data.userId)
+      const result = { ...data, ...res1 }
+      commit('SET_USER_INFO', result)
       return JSON.parse(JSON.stringify(result))
     },
     logout({ commit }) {
-      commit('REMOVE_USER_INFO')
       commit('REMOVE_TOKEN')
+      commit('REMOVE_USER_INFO')
     }
   }
 }

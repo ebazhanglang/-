@@ -1,23 +1,23 @@
-import router from '@/router'
+import router from './router'
 import store from './store'
 
-const whiteList = ['/login', '/404']
-/* eslint-disable */
-router.beforeEach(async (to, from, next) => {
+const white = ['/404', '/login']
+
+router.beforeEach(async(to, from, next) => {
   if (store.getters.token) {
-    if (!store.getters.info) {
+    if (!store.getters.userId) {
       await store.dispatch('user/getUserInfo')
     }
     if (to.path === '/login') {
-      next('/')
+      next({ path: '/' })
     } else {
       next()
     }
   } else {
-    if (whiteList.includes(to.path)) {
+    if (white.includes(to.path)) {
       next()
     } else {
-      next('/login')
+      next({ path: '/login' })
     }
   }
 })

@@ -1,5 +1,7 @@
 <template>
-  <div>approvals</div>
+  <div>
+    approval
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,7 @@
 <template>
-  <div>social</div>
+  <div>
+    social
+  </div>
 </template>
 
 <script>

@@ -1,14 +1,19 @@
-import requset from '@/utils/request'
-export const getUserDetaolByid = (id) => {
-  return requset({
-    url: `sys/user/${id}`
+import request from '@/utils/request'
+
+export function login(data) {
+
+}
+
+export function getUserInfo() {
+  return request({
+    method: 'POST',
+    url: '/sys/profile'
   })
 }
 
-export function getInfo() {
-  return requset({
-    url: '/sys/profile',
-    method: 'POST'
+export const getUserDetailById = (id) => {
+  return request({
+    url: `/sys/user/${id}`
   })
 }
 

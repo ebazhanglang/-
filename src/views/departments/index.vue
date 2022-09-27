@@ -1,5 +1,7 @@
 <template>
-  <div>departments</div>
+  <div>
+    department
+  </div>
 </template>
 
 <script>

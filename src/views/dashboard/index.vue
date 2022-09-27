@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
-    <svg-icon iconClass='nested'></svg-icon>
   </div>
 </template>
 
@@ -18,6 +17,10 @@ export default {
 }
 </script>
 
+<style lang="scss">
+
+</style>
+
 <style lang="scss" scoped>
 .dashboard {
   &-container {
@@ -28,4 +31,5 @@ export default {
     line-height: 46px;
   }
 }
+
 </style>
