@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
 import router from '@/router'
-const isTime = 1 // 秒
+const isTime = 3600 // 秒
 const devserve = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   timeout: 5000
