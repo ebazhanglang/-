@@ -6,7 +6,8 @@ export default {
   namespaced: true,
   state: {
     token: null,
-    userInfo: {}
+    userInfo: {},
+    hrsaastime: 0
   },
   mutations: {
     GET_TOKEN(state, payload) {
@@ -17,12 +18,20 @@ export default {
     },
     REMOVE_USER_INFO(state) {
       state.userInfo = {}
+    },
+    REMOVE_TOKEN(state) {
+      state.token = null
+    },
+    SET_HRSAASTIME(state, hrsaastime) {
+      state.hrsaastime = hrsaastime
     }
   },
   actions: {
     async getLogin({ commit }, loginData) {
       const data = await loginAPI(loginData)
       commit('GET_TOKEN', data)
+      // 登录时 获取当前时间, 用于记录登录时间
+      commit('SET_HRSAASTIME', new Date().getTime())
     },
     async getUserInfo({ commit },) {
       const res = await getInfo()
@@ -31,6 +40,10 @@ export default {
       const result = { ...res, ...res1 }
       commit('GET_USER_INFO', result)
       return JSON.parse(JSON.stringify(result))
+    },
+    logout({ commit }) {
+      commit('REMOVE_USER_INFO')
+      commit('REMOVE_TOKEN')
     }
   }
 }

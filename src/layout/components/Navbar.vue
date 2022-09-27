@@ -1,7 +1,6 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
     <!-- <breadcrumb class="breadcrumb-container" /> -->
     <div class="app-breadcrumb">
       江苏传智播客教育科技股份有限公司
@@ -15,7 +14,7 @@
             :src="staffPhoto"
             class="user-avatar"
           >
-          <span>用户名</span>
+          <span>{{ name }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -74,7 +73,8 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar',
-      'staffPhoto'
+      'staffPhoto',
+      'name'
     ])
   },
   methods: {
