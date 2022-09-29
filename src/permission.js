@@ -1,15 +1,15 @@
 import router from './router'
 import store from './store'
-
+/* eslint-disable */
 const white = ['/404', '/login']
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (store.getters.token) {
     if (!store.getters.userId) {
       await store.dispatch('user/getUserInfo')
     }
     if (to.path === '/login') {
-      next({ path: '/' })
+      next('/')
     } else {
       next()
     }
@@ -17,7 +17,7 @@ router.beforeEach(async(to, from, next) => {
     if (white.includes(to.path)) {
       next()
     } else {
-      next({ path: '/login' })
+      next('/login')
     }
   }
 })

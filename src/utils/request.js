@@ -19,8 +19,7 @@ service.interceptors.request.use(config => {
     config.headers['Authorization'] = `Bearer ${store.getters.token}`
   }
   return config
-},
-error => {
+}, error => {
   return Promise.reject(error)
 })
 
@@ -33,7 +32,6 @@ service.interceptors.response.use(response => {
   // throw (new Error(message))
   return Promise.reject(new Error(message))
 }, error => {
-  console.dir(error)
   if (error.response?.status === 401) {
     store.dispatch('user/logout')
     router.push('/login')
