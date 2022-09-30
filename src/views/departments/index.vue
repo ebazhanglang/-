@@ -1,51 +1,63 @@
 <template>
   <div class="departments-container">
     <el-card>
-      <treetools :tree-node="company" :is-root="false" />
+      <tree-tools :tree-node="company" :is-root="false" @addDepts="handle" />
     </el-card>
-    <el-tree :data="departs" :default-expand-all="true" :props="defaultProps">
-      <treetools slot-scope="{data}" :tree-node="data" />
+    <el-tree :data="departs" :props="defaultProps">
+      <tree-tools slot-scope="{data}" :tree-node="data" @addDepts="handle" />
     </el-tree>
+    <add-dept :show-dialog.sync="showDialog" :current-node="currentNode" />
   </div>
 </template>
 
 <script>
+import TreeTools from './components/tree-tools.vue'
 import { getDepartments } from '@/api/departments'
-import treetools from './components/tree-tools.vue'
+import { tranListToTreeData } from '@/utils'
+import AddDept from './components/add-dept' // 引入新增部门组件
 export default {
   components: {
-    treetools
+    TreeTools,
+    AddDept
   },
+
   data() {
     return {
+      company: { },
+      departs: [],
       defaultProps: {
         label: 'name'
       },
-      departs: [{ name: '总裁办', manager: '曹操', children: [{ name: '董事会', manager: '曹丕' }] },
-        { name: '行政部', manager: '刘备' },
-        { name: '人事部', manager: '孙权' }],
-      company: { name: '江苏传智播客教育科技股份有限公司', manager: '负责人' }
+      showDialog: false,
+      currentNode: {}
     }
   },
-  mounted() {
-    this.getDepartments()
+  created() {
+    this.getDepartments() // 调用自身的方法
   },
   methods: {
     async getDepartments() {
-      await getDepartments()
+      const result = await getDepartments()
+      this.company = { name: result.companyName, manager: result.companyManage, id: '' }
+      // 需要将其转化成树形结构
+      this.departs = tranListToTreeData(result.depts, '')
+    },
+    handle(node) {
+      this.showDialog = true
+      this.currentNode = node
     }
   }
 }
 </script>
 
-<style lang='scss'>
-.departments-container {
-  width: 900px;
-  margin: 20px auto;
-  .el-tree {
-    .el-card__body {
-      padding-right: 0px !important;
+<style lang="scss">
+  .departments-container {
+    width: 900px;
+    margin: 20px auto;
+    .el-tree {
+      .el-tree-node__content {
+        padding-right: 20px;
+      }
     }
   }
-}
 </style>
