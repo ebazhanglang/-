@@ -1,12 +1,12 @@
 <template>
-  <div class="departments-container">
+  <div v-loading="loading" class="departments-container">
     <el-card>
-      <tree-tools :tree-node="company" :is-root="false" @addDepts="handle" />
+      <tree-tools :tree-node="company" :is-root="false" @addDepts="handle" @editDepts="addHandle" />
     </el-card>
     <el-tree :data="departs" :props="defaultProps">
-      <tree-tools slot-scope="{data}" :tree-node="data" @addDepts="handle" />
+      <tree-tools slot-scope="{data}" :tree-node="data" @addDepts="handle" @editDepts="addHandle" @refreshList="getDepartments" />
     </el-tree>
-    <add-dept :show-dialog.sync="showDialog" :current-node="currentNode" />
+    <add-dept ref="addDept" :show-dialog.sync="showDialog" :tree-node="currentNode" />
   </div>
 </template>
 
@@ -24,12 +24,15 @@ export default {
   data() {
     return {
       company: { },
-      departs: [],
+      departs: [{ name: '总裁办', manager: '曹操', children: [{ name: '董事会', manager: '曹丕' }] },
+        { name: '行政部', manager: '刘备' },
+        { name: '人事部', manager: '孙权' }],
       defaultProps: {
         label: 'name'
       },
       showDialog: false,
-      currentNode: {}
+      currentNode: {},
+      loading: false
     }
   },
   created() {
@@ -37,14 +40,23 @@ export default {
   },
   methods: {
     async getDepartments() {
-      const result = await getDepartments()
-      this.company = { name: result.companyName, manager: result.companyManage, id: '' }
-      // 需要将其转化成树形结构
-      this.departs = tranListToTreeData(result.depts, '')
+      try {
+        this.loading = true
+        const { depts, companyManage, companyName } = await getDepartments()
+        this.departs = tranListToTreeData(depts, '')
+        this.company = { name: companyName, manager: companyManage, id: '' }
+      } finally {
+        this.loading = false
+      }
     },
     handle(node) {
       this.showDialog = true
       this.currentNode = node
+    },
+    addHandle(node) {
+      this.showDialog = true
+      this.currentNode = { ...node }
+      this.$refs.addDept.formData = { ...node }
     }
   }
 }
