@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
+    <!-- <UploadExcel :on-success="handleSuccess" :before-upload="handleUpload" /> -->
   </div>
 </template>
 
@@ -13,6 +14,18 @@ export default {
     ...mapGetters([
       'name'
     ])
+  },
+  methods: {
+    // handleSuccess(e) {
+    //   console.log(e)
+    // },
+    // handleUpload(e) {
+    //   if (e.size > 10240) {
+    //     this.$message.error('to Big')
+    //     return false
+    //   }
+    //   return true
+    // }
   }
 }
 </script>
