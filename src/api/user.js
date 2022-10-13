@@ -11,9 +11,27 @@ export function getUserInfo() {
   })
 }
 
-export const getUserDetailById = (id) => {
+/**
+ * 获取员工基本信息
+ * @param {*} id
+ * @returns
+ */
+export function getUserDetailById(id) {
   return request({
     url: `/sys/user/${id}`
+  })
+}
+
+/**
+ * 保存用户信息
+ * @param {*} data
+ * @returns promise
+ */
+export function saveUserDetailById(data) {
+  return request({
+    url: `/sys/user/${data.id}`,
+    method: 'PUT',
+    data
   })
 }
 
