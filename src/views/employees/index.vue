@@ -14,6 +14,11 @@
     <el-card>
       <el-table v-loading="loading" border :data="list">
         <el-table-column label="序号" sortable="" width="80" type="index" />
+        <el-table-column label="头像" sortable="" width="80" type="index">
+          <template slot-scope="{row}">
+            <img style="width:100%" :src="row.staffPhoto" alt="" @click="showQRcode(row.staffPhoto)">
+          </template>
+        </el-table-column>
         <el-table-column label="姓名" prop="username" />
         <el-table-column label="工号" prop="workNumber" />
         <el-table-column label="聘用形式" prop="formOfEmployment" :formatter="formatEmployment" />
@@ -53,6 +58,13 @@
       </el-row>
     </el-card>
     <add-employess :is-show-dialog.sync="isShowDialog" />
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogQRVisible"
+      width="50%"
+    >
+      <canvas ref="canvas" />
+    </el-dialog>
   </div>
 </template>
 
@@ -60,6 +72,7 @@
 import { getEmployeeListAPI, delEmployeeAPI } from '@/api/EmployeeSimple'
 import employees from '@/api/constant/employees'
 import addEmployess from './components/addEmpoloyess.vue'
+import QRCode from 'qrcode'
 export default {
   name: 'Employees',
   components: {
@@ -71,6 +84,7 @@ export default {
         page: 1,
         size: 10
       },
+      dialogQRVisible: false,
       list: [],
       total: 0,
       loading: false,
@@ -147,6 +161,16 @@ export default {
     },
     goDetaile(row) {
       this.$router.push('/employees/detaile/' + row.id)
+    },
+    showQRcode(staffPhoto) {
+      if (!staffPhoto) return
+      this.dialogQRVisible = true
+      this.$nextTick(() => {
+        QRCode.toCanvas(this.$refs.canvas, staffPhoto, function(error) {
+          if (error) console.error(error)
+          console.log('success')
+        })
+      })
     }
   }
 }

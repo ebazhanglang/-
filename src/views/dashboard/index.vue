@@ -16,16 +16,6 @@ export default {
     ])
   },
   methods: {
-    // handleSuccess(e) {
-    //   console.log(e)
-    // },
-    // handleUpload(e) {
-    //   if (e.size > 10240) {
-    //     this.$message.error('to Big')
-    //     return false
-    //   }
-    //   return true
-    // }
   }
 }
 </script>

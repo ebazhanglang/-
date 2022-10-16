@@ -11,6 +11,8 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
+import print from 'vue-print-nb'
+Vue.use(print)
 
 import '@/icons' // icon
 import '@/permission' // permission control
