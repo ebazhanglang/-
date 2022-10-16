@@ -13,6 +13,10 @@
 import pathToRegexp from 'path-to-regexp'
 
 export default {
+<<<<<<< HEAD
+=======
+  name: 'Breadcrumb',
+>>>>>>> feature/employees
   data() {
     return {
       levelList: null

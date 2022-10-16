@@ -1,7 +1,11 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
+<<<<<<< HEAD
     <svg-icon iconClass='nested'></svg-icon>
+=======
+    <!-- <UploadExcel :on-success="handleSuccess" :before-upload="handleUpload" /> -->
+>>>>>>> feature/employees
   </div>
 </template>
 
@@ -14,10 +18,22 @@ export default {
     ...mapGetters([
       'name'
     ])
+<<<<<<< HEAD
+=======
+  },
+  methods: {
+>>>>>>> feature/employees
   }
 }
 </script>
 
+<<<<<<< HEAD
+=======
+<style lang="scss">
+
+</style>
+
+>>>>>>> feature/employees
 <style lang="scss" scoped>
 .dashboard {
   &-container {
@@ -28,4 +44,8 @@ export default {
     line-height: 46px;
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/employees
 </style>
